@@ -1,6 +1,35 @@
 <?php
-    include('config.php'); // Include database connection
-    session_start();
+    include('config.php'); // Include the database connection
+
+    session_start(); // Start the session for storing logged-in user details
+
+    if ($_SERVER["REQUEST_METHOD"] == "POST") {
+        // Collect input values
+        $nic = $_POST['nic'];
+        $password = $_POST['password'];
+
+        // Hash the password for comparison (ensure the passwords are hashed during registration)
+        $sql = "SELECT * FROM students WHERE nic = '$nic'";
+        $result = $conn->query($sql);
+
+        if ($result->num_rows > 0) {
+            // User exists, fetch data
+            $user = $result->fetch_assoc();
+            if (password_verify($password, $user['password'])) {
+                // Correct password
+                $_SESSION['user_id'] = $user['id'];
+                $_SESSION['fname'] = $user['fname'];
+                header('Location: student.php'); // Redirect to student page
+                exit();
+            } 
+            else {
+                $error_message = "Incorrect password!";
+            }
+        } 
+        else {
+            $error_message = "No user found with this NIC!";
+        }
+    }
 ?>
 
 <!DOCTYPE html>
