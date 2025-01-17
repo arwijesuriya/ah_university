@@ -120,6 +120,13 @@
                 <button type="submit">Login</button>
             </form>
             
+            <!-- error message -->
+            <?php
+                if (isset($error_message)) {
+                    echo "<p style='color: red;'>$error_message</p>"; // Show error message if login fails
+                }
+            ?>
+
             <div class="register-link">
                 <p>Don't have an account? <a href="register.php">Register here</a></p>
             </div>
