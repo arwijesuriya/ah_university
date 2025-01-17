@@ -1,6 +1,30 @@
 <?php
-    include('config.php'); // Include database connection
-    session_start();
+    include('config.php'); // Include the database connection
+
+    if ($_SERVER["REQUEST_METHOD"] == "POST") {
+        // Collect input values
+        $fname = $_POST['fname'];
+        $nic = $_POST['nic'];
+        $password = $_POST['password'];
+        $address = $_POST['address'];
+        $mobile_number = $_POST['mobile_number'];
+        $course = $_POST['course'];
+
+        // Hash the password before storing it
+        $hashed_password = password_hash($password, PASSWORD_DEFAULT);
+
+        // Insert the data into the database
+        $sql = "INSERT INTO students (fname, nic, password, address, mobile_number, course) 
+                VALUES ('$fname', '$nic', '$hashed_password', '$address', '$mobile_number', '$course')";
+
+        if ($conn->query($sql) === TRUE) {
+            header('Location: login.php'); // Redirect to login page after successful registration
+            exit();
+        } 
+        else {
+            $error_message = "Error: " . $sql . "<br>" . $conn->error; // Show error message if there's an issue
+        }
+    }
 ?>
 
 <!DOCTYPE html>
