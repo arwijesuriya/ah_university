@@ -121,6 +121,13 @@
                 <button type="submit">Register</button>
             </form>
             
+            <!-- error message -->
+            <?php
+                if (isset($error_message)) {
+                    echo "<p style='color: red;'>$error_message</p>"; // Show error message if registration fails
+                }
+            ?>
+
             <div class="login-link">
                 <p>Already have an account? <a href="login.php">Login here</a></p>
             </div>
