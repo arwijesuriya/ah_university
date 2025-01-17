@@ -1,3 +1,8 @@
+<?php
+    include('config.php'); // Include database connection
+    session_start();
+?>
+
 <!DOCTYPE html>
 <html lang="en">
     <head>
